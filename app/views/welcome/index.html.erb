@@ -1,8 +1,15 @@
-<%= button_to "Log In", login_path, method: :get %>
-<%= button_to "Create New User", register_path, method: :get %>
-<section class='existing-users'>
-    <p>Existing Users: </p>
-    <% @users.each do |user| %>
+<% if !current_user && !logged_in? %>
+    <%= button_to "Log In", login_path, method: :get %>
+    <%= button_to "Create New User", register_path, method: :get %>
+<% end %>
+
+<% if current_user && logged_in? %>
+  <section class='existing-users'>
+    <p>Existing Users:</p>
+    <ul>
+      <% @users.each do |user| %>
         <li><%= link_to user.email, user_path(user.id) %></li>
-    <% end %>
-</section>
+      <% end %>
+    </ul>
+  </section>
+<% end %>
